@@ -1,0 +1,7 @@
+1.  CREATE DATABASE shop;
+
+2.  CREATE USER shop;
+    GRANT ALL PRIVILEGES ON DATABASE shop TO shop;
+
+3.  CREATE USER viewer;
+    
