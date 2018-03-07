@@ -1,11 +1,14 @@
 
-1. Создать базу данных shop.
+1. 	CREATE DATABASE shop;
 
-2. Создать юзера shop и дать ему полный доступ к БД shop.
+2. 	CREATE USER `shop`@`localhost`; 
+	GRANT ALL PRIVILEGES ON shop TO `shop`@`localhost`;
 
-3. Создать юзера viewer и дать ему доступ на чтение БД shop.
+3. 	CREATE USER `viewer`@`localhost`; 
+	GRANT SELECT ON shop TO `viewer`@`localhost`;
 
-4. Создать таблицу для хранения категорий (хранить название).
+4. 	USE shop; // for mysql shell
+	CREATE TABLE category (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR(15));
 
 5. Добавить несколько категорий.
 
