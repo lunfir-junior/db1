@@ -8,11 +8,18 @@
 	GRANT SELECT ON shop TO `viewer`@`localhost`;
 
 4. 	USE shop; // for mysql shell
-	CREATE TABLE category (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, category VARCHAR(15) NOT NULL, UNIQUE KEY(category));
+	CREATE TABLE category  (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+                            category VARCHAR(15) NOT NULL, 
+                            UNIQUE KEY(category));
 
 5. 	INSERT INTO category (category) VALUES ('bakery'), ('fruit'), ('floral'), ('seafood');
 
-6. 	CREATE TABLE goods (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR(15) NOT NULL, category VARCHAR(15) NULL, category_id INT, price DECIMAL(10, 2) NOT NULL, UNIQUE KEY(name));
+6. 	CREATE TABLE goods (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, 
+                        name VARCHAR(15) NOT NULL, 
+                        category VARCHAR(15) NULL, 
+                        category_id INT, 
+                        price DECIMAL(10, 2) NOT NULL, 
+                        UNIQUE KEY(name));
 
 7. 	INSERT INTO goods (category_id, name, price) VALUES  (1, 'brownie', 1.00), 
                                                 		 (4, 'salmon', 1.00),
@@ -33,7 +40,7 @@
 
 9. 	UPDATE goods SET price=price+price*0.1;
 
-10. DELETE FROM goods WHERE id=2 LIMIT 1;
+10. DELETE FROM goods WHERE id=2;
 	UPDATE goods SET id=id-1 WHERE id>1;
 
 
