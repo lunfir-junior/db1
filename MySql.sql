@@ -37,22 +37,23 @@
 	UPDATE goods SET id=id-1 WHERE id>1;
 
 
-11. Выбрать все товары с сортировкой по названию.
+11. SELECT * FROM goods ORDER BY goods.name ASC;
+	SELECT * FROM goods ORDER BY goods.name DESC;
 
-12. Выбрать все товары с сортировкой по убыванию цены.
+12. SELECT * FROM goods ORDER BY goods.price DESC;
 
-13. Выбрать 3 самых дорогих товара.
+13. SELECT * FROM goods GROUP BY id ORDER BY goods.price DESC LIMIT 3;
 
-14. Выбрать 3 самых дешевых товара.
+14. SELECT * FROM goods ORDER BY goods.price, goods.id ASC LIMIT 3;
 
-15. Выбрать вторую тройку самых дорогих товаров (с 4 по 6).
+15. SELECT * FROM goods ORDER BY goods.price DESC LIMIT 3,3;
 
-16. Выбрать наименование самого дорогого товара.
+16. SELECT goods.name FROM goods ORDER BY goods.price DESC LIMIT 1;
 
-17. Выбрать наименование самого дешевого товара.
+17. SELECT goods.name FROM goods ORDER BY goods.price, goods.id ASC LIMIT 1;
 
-18. Выбрать количество всех товаров.
+18. SELECT goods.id FROM goods ORDER BY goods.id DESC LIMIT 1;
 
-19. Выбрать среднюю цену всех товаров.
+19. SELECT AVG(goods.price) FROM goods;
 
-20. Создать представление (create view) с отображением 3 самых дорогих товаров. 
+20. CREATE OR REPLACE VIEW goods_view AS SELECT goods.id, goods.name, goods.category, goods.price FROM goods ORDER BY goods.price DESC LIMIT 3; 
