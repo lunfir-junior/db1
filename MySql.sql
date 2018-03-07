@@ -8,19 +8,34 @@
 	GRANT SELECT ON shop TO `viewer`@`localhost`;
 
 4. 	USE shop; // for mysql shell
-	CREATE TABLE category (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR(15));
+	CREATE TABLE category (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, category VARCHAR(15) NOT NULL, UNIQUE KEY(category));
 
-5. Добавить несколько категорий.
+5. 	INSERT INTO category (category) VALUES ('bakery'), ('fruit'), ('floral'), ('seafood');
 
-6. Создать таблицу для хранения товаров (название, категория, цена).
+6. 	CREATE TABLE goods (id INT NOT NULL PRIMARY KEY AUTO_INCREMENT, name VARCHAR(15) NOT NULL, category VARCHAR(15) NULL, category_id INT, price DECIMAL(10, 2) NOT NULL, UNIQUE KEY(name));
 
-7. Внести несколько товаров по цене 1.00
+7. 	INSERT INTO goods (category_id, name, price) VALUES  (1, 'brownie', 1.00), 
+                                                		 (4, 'salmon', 1.00),
+                                                		 (2, 'strawberry', 1.00), 
+                                                		 (1, 'cookie', 1.00), 
+                                                		 (2, 'cherry', 1.00), 
+                                                		 (3, 'lily', 1.00), 
+                                                		 (3, 'lavender', 1.00),
+                                                		 (4, 'catfish', 1.00),
+                                                		 (3, 'lilac', 1.00), 
+                                                		 (2, 'lemon', 1.00); 
 
-8. Обновить цену первого товара — 3.50
+    UPDATE goods,category SET goods.category=category.category WHERE goods.category_id = category.id;
 
-9. Увеличить цену всех товаров на 10%.
 
-10. Удалить товар № 2.
+
+8. 	UPDATE goods SET price=3.50 WHERE id=1;
+
+9. 	UPDATE goods SET price=price+price*0.1;
+
+10. DELETE FROM goods WHERE id=2 LIMIT 1;
+	UPDATE goods SET id=id-1 WHERE id>1;
+
 
 11. Выбрать все товары с сортировкой по названию.
 

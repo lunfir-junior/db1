@@ -18,13 +18,15 @@
                          price real NOT NULL);
 
 7.  INSERT INTO goods (id, name, price) VALUES  (1, 'brownie', 1.00), 
-                                            (1, 'cookie', 1.00), 
-                                            (2, 'strawberry', 1.00), 
-                                            (2, 'cherry', 1.00), 
-                                            (2, 'lemon', 1.00), 
-                                            (3, 'lily', 1.00), 
-                                            (3, 'lilac', 1.00), 
-                                            (3, 'lavender', 1.00); 
+                                                (1, 'cookie', 1.00), 
+                                                (2, 'strawberry', 1.00), 
+                                                (2, 'cherry', 1.00), 
+                                                (2, 'lemon', 1.00), 
+                                                (3, 'lily', 1.00), 
+                                                (3, 'lilac', 1.00), 
+                                                (3, 'lavender', 1.00),
+                                                (4, 'catfish', 1.00), 
+                                                (4, 'salmon', 1.00);
 
 
 8.  Обновить цену первого товара — 3.50
