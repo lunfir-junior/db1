@@ -34,8 +34,6 @@
 
     UPDATE goods,category SET goods.category=category.category WHERE goods.category_id = category.id;
 
-
-
 8. 	UPDATE goods SET price=3.50 WHERE id=1;
 
 9. 	UPDATE goods SET price=price+price*0.1;
