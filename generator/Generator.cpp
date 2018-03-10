@@ -1,6 +1,6 @@
 #include "Generator.h"
 
-QString Generator::table = QString("CREATE TABLE %1 ( id serial primary key, %2);");
+QString Generator::table = QString("CREATE TABLE %1 ( %2 );");
 
 Generator::Generator()
 {
@@ -31,7 +31,7 @@ QStringList Generator::parse(QString file)
 {
   QFile schema(file);
   QStringList out;
-  QString buf;
+  QString buf, prefix;
 
   if ( !schema.open(QIODevice::ReadOnly) )
     qWarning() << "file error: " << schema.errorString();
@@ -45,11 +45,17 @@ QStringList Generator::parse(QString file)
         out.append(buf.remove(buf.length() - 2, 2));
         buf.clear();
       }
-      out.append(line.remove(":"));
+
+      prefix = line.remove(":").toLower();
+      out.append(prefix);
+
+      prefix.append('_');
+      buf.append(prefix + QString("id serial primary key, "));
+//      buf
     }
 
     if ( line.contains(QRegularExpression("([a-z]\\w+: \\w+)")))
-      buf.append(line.remove(":").append(", "));
+      buf.append(prefix + line.remove(":").append(", "));
   }
 
   buf.remove(buf.length() - 2, 2);
