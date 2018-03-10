@@ -1,43 +1,59 @@
 #include "Generator.h"
 
-QString Generator::table = QString("CREATE TABLE goods ( id serial primary key, name varchar(15) NOT NULL, category varchar(20) NOT NULL, price numeric(10, 2) NOT NULL, UNIQUE(name));");
+QString Generator::table = QString("CREATE TABLE %1 ( id serial primary key, %2);");
 
 Generator::Generator()
 {
-  qDebug() << table;
+  qDebug() << __PRETTY_FUNCTION__;
 }
 
 Generator::~Generator()
 {
-
+  qDebug() << __PRETTY_FUNCTION__;
 }
 
-void Generator::generate(QString file)
+QStringList Generator::generate(QString file)
 {
-  printf("%s\n", file.toLatin1().data());
-  parse(file);
+  QStringList out, schema;
+  int len;
 
+  schema = parse(file);
+  len = schema.length();
+
+  for ( int i = 1; i < len; i += 2 ) {
+    out.append(table.arg(schema.at(i-1), schema.at(i)));
+  }
+
+  return out;
 }
 
-void Generator::parse(QString file)
+QStringList Generator::parse(QString file)
 {
   QFile schema(file);
-//  QMap<QString, QString> out;
   QStringList out;
+  QString buf;
 
   if ( !schema.open(QIODevice::ReadOnly) )
     qWarning() << "file error: " << schema.errorString();
 
   QTextStream in(&schema);
   while( !in.atEnd() ) {
-//    QString out = in.readLine()/*.trimmed()*/;
-//    out.append(in.readLine().trimmed());
-//    QStringList list = out.split()
     QString line = in.readLine().trimmed();
-    if ( !line.isEmpty() )
-      out.append(line);
-  }
-  qDebug() << out;
 
-//  printf("%s\n", out.toLatin1().data());
+    if ( line.contains(QRegularExpression("([A-Z])\\w+:"))) {
+      if ( !buf.isEmpty() ) {
+        out.append(buf.remove(buf.length() - 2, 2));
+        buf.clear();
+      }
+      out.append(line.remove(":"));
+    }
+
+    if ( line.contains(QRegularExpression("([a-z]\\w+: \\w+)")))
+      buf.append(line.remove(":").append(", "));
+  }
+
+  buf.remove(buf.length() - 2, 2);
+  out.append(buf);
+
+  return out;
 }

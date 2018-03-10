@@ -6,17 +6,20 @@
 #include <QTextStream>
 #include <QDebug>
 
+#include <QRegularExpression>
+
 class Generator
 {
   public:
     explicit Generator();
     virtual ~Generator();
 
-    void generate(QString file);
+    QStringList generate(QString file);
 
     static QString table;
   private:
-    void parse(QString file);
+
+    QStringList parse(QString file);
 
 };
 
