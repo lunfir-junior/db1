@@ -18,8 +18,9 @@ class Generator
 
     static QString table;
   private:
+    QStringList read(QString file);
+    QStringList parse(QStringList schema);
 
-    QStringList parse(QString file);
 
 };
 
