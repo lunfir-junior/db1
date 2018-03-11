@@ -1,6 +1,9 @@
 #include "Generator.h"
 
 QString Generator::table = QString("CREATE TABLE %1 ( %2 );");
+QString Generator::timestamp = QString("ALTER TABLE %1 ADD COLUMN %1_%2 TIMESTAMP DEFAULT NOW();");
+QString Generator::procedure = QString("CREATE OR REPLACE FUNCTION update()\nRETURNS TRIGGER AS $$\n BEGIN\n NEW.%1_updated = NOW();\n RETURN NEW;\n END;\n$$ language 'plpgsql';");
+QString Generator::trigger = QString("CREATE TRIGGER update_%1_updated BEFORE UPDATE ON %1 FOR EACH ROW EXECUTE PROCEDURE update();\n");
 
 Generator::Generator()
 {
@@ -21,7 +24,13 @@ QStringList Generator::generate(QString file)
   len = schema.length();
 
   for ( int i = 1; i < len; i += 2 ) {
-    out.append(table.arg(schema.at(i-1), schema.at(i)));
+    QString prefix = schema.at(i-1);
+
+    out.append(table.arg(prefix, schema.at(i)));
+    out.append(addTimestamp(prefix, "created"));
+    out.append(addTimestamp(prefix, "updated"));
+    out.append(addFunction(prefix));
+    out.append(addTrigger(prefix));
   }
 
   return out;
@@ -74,4 +83,19 @@ QStringList Generator::parse(QStringList schema)
     out.append(buf);
 
   return out;
+}
+
+QString Generator::addTimestamp(QString table, QString column)
+{
+  return timestamp.arg(table, column);
+}
+
+QString Generator::addFunction(QString table)
+{
+  return procedure.arg(table);
+}
+
+QString Generator::addTrigger(QString table)
+{
+  return trigger.arg(table);
 }

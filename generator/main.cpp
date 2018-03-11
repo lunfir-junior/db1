@@ -9,7 +9,7 @@ int main(int argc, char *argv[])
   QStringList statements = generator.generate(file);
 
   foreach( auto i, statements )
-    qDebug() << i;
+    qDebug().noquote() << i;
 
   a.quit();
   return 0;
