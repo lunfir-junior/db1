@@ -8,46 +8,52 @@
 
 4.  \connect shop;
     CREATE TABLE category ( id serial primary key, 
-                            category varchar(20) NOT NULL);
+                            category varchar(20) NOT NULL,
+                            UNIQUE (category));
 
 5.  INSERT INTO category (category) VALUES ('bakery'), ('fruit'), ('floral'), ('seafood');
 
-6.  CREATE TABLE goods ( id serial, 
-                         name varchar(10) NOT NULL,
-                         category varchar(20) NULL , 
-                         price real NOT NULL);
+6.  CREATE TABLE goods ( id serial primary key,
+                         name varchar(15) NOT NULL,
+                         category varchar(20) NOT NULL,
+                         price numeric(10, 2) NOT NULL,
+                         UNIQUE(name));
 
-7.  INSERT INTO goods (id, name, price) VALUES  (1, 'brownie', 1.00), 
-                                                (1, 'cookie', 1.00), 
-                                                (2, 'strawberry', 1.00), 
-                                                (2, 'cherry', 1.00), 
-                                                (2, 'lemon', 1.00), 
-                                                (3, 'lily', 1.00), 
-                                                (3, 'lilac', 1.00), 
-                                                (3, 'lavender', 1.00),
-                                                (4, 'catfish', 1.00), 
-                                                (4, 'salmon', 1.00);
+7.  INSERT INTO goods (name, category, price) VALUES ('strawberry', 'fruit',    1.00),
+                                                     ('cookie',     'bakery',   1.00),
+                                                     ('lily',       'floral',   1.00),
+                                                     ('cherry',     'fruit',    1.00),
+                                                     ('lemon',      'fruit',    1.00),
+                                                     ('lilac',      'floral',   1.00),
+                                                     ('catfish',    'seafood',  1.00),
+                                                     ('lavender',   'floral',   1.00),
+                                                     ('brownie',    'bakery',   1.00),
+                                                     ('salmon',     'seafood',  1.00);
 
+8.  UPDATE goods SET price=3.50 WHERE id=1;
 
-8.  Обновить цену первого товара — 3.50
-9.  Увеличить цену всех товаров на 10%.
-10. Удалить товар № 2.
-11. Выбрать все товары с сортировкой по названию.
-12. Выбрать все товары с сортировкой по убыванию цены.
-13. Выбрать 3 самых дорогих товара.
-14. Выбрать 3 самых дешевых товара.
-15. Выбрать вторую тройку самых дорогих товаров (с 4 по 6).
-16. Выбрать наименование самого дорогого товара.
-17. Выбрать наименование самого дешевого товара.
-18. Выбрать количество всех товаров.
-19. Выбрать среднюю цену всех товаров.
-20. Создать представление (create view) с отображением 3 самых дорогих товаров.
-    
-    bakery:
-        bread, brownie, cookie
-    fruit:
-        strawberry, cherry, lemon
-    floral:
-        lily, lilac, lavender
-    seafood:
-        salmon, catfish, shrimp
+9.  UPDATE goods SET price=price+price*0.1;
+
+10. DELETE FROM goods WHERE id=2;
+    UPDATE goods SET id=id-1 WHERE id>1;
+
+11. SELECT * FROM goods ORDER BY name ASC;
+    SELECT * FROM goods ORDER BY name DESC;
+
+12. SELECT * FROM goods ORDER BY price DESC;
+
+13. SELECT * FROM goods ORDER BY id, price DESC LIMIT 3;
+
+14. SELECT * FROM goods ORDER BY price,id ASC LIMIT 3;
+
+15. SELECT * FROM goods ORDER BY price DESC LIMIT 3 OFFSET 3;
+
+16. SELECT name FROM goods ORDER BY price DESC LIMIT 1;
+
+17. SELECT name FROM goods ORDER BY price,id ASC LIMIT 1;
+
+18. SELECT id FROM goods ORDER BY id DESC LIMIT 1;
+
+19. SELECT AVG(price) FROM goods;
+
+20. CREATE OR REPLACE VIEW goods_view AS SELECT id, name, category, price FROM goods ORDER BY id, price DESC LIMIT 3;
