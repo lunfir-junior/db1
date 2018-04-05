@@ -25,3 +25,16 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 HEADERS += \
     Generator.h
+
+win32:CONFIG(release, debug|release): LIBS += -L$$PWD/yaml-cpp/build/release/ -lyaml-cpp
+else:win32:CONFIG(debug, debug|release): LIBS += -L$$PWD/yaml-cpp/build/debug/ -lyaml-cpp
+else:unix: LIBS += -L$$PWD/yaml-cpp/build/ -lyaml-cpp
+
+INCLUDEPATH += $$PWD/yaml-cpp/include/
+DEPENDPATH += $$PWD/yaml-cpp/include/
+
+win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/yaml-cpp/build/release/libyaml-cpp.a
+else:win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/yaml-cpp/build/debug/libyaml-cpp.a
+else:win32:!win32-g++:CONFIG(release, debug|release): PRE_TARGETDEPS += $$PWD/yaml-cpp/build/release/yaml-cpp.lib
+else:win32:!win32-g++:CONFIG(debug, debug|release): PRE_TARGETDEPS += $$PWD/yaml-cpp/build/debug/yaml-cpp.lib
+else:unix: PRE_TARGETDEPS += $$PWD/yaml-cpp/build/libyaml-cpp.a

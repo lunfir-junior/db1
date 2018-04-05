@@ -20,6 +20,15 @@ QStringList Generator::generate(QString file)
   QStringList out, schema;
   int len;
 
+  YAML::Node config = YAML::LoadFile("schema.yaml");
+
+  qDebug() << "config size: " << config.size();
+  int size = config.size();
+
+  for ( int i = 0; i < size; i++ ) {
+    std::cout << config[i].as<int>();
+  }
+
   schema = parse(read(file));
   len = schema.length();
 

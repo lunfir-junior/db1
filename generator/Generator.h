@@ -7,6 +7,8 @@
 #include <QDebug>
 
 #include <QRegularExpression>
+#include "yaml-cpp/yaml.h"
+#include <iostream>
 
 class Generator
 {
