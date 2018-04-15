@@ -1,6 +1,9 @@
     -- 1. Вывести все товары и категорию, в которой они находятся.
+    SELECT item.item_name, category.category_title FROM "item" INNER JOIN "category" ON item.category_id=category.category_id;
 
     -- 2. Вывести все товары из конкретного заказа.
+    SELECT item__order.order_id, item.item_name FROM "item__order" INNER JOIN "item" ON item__order.order_id=2 AND item__order.item_id=item.item_id;
+    -- add items quantity
 
     -- 3. Вывести все заказы с конкретной единицей товара.
 
