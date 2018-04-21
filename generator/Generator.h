@@ -9,6 +9,7 @@
 #include <QRegularExpression>
 #include "yaml-cpp/yaml.h"
 #include <iostream>
+#include <QMap>
 
 class Generator
 {
@@ -24,7 +25,7 @@ class Generator
     static QString trigger;
 
   private:
-    QStringList read(QString file);
+    QString read(QString file);
     QStringList parse(QStringList schema);
     QString addTimestamp(QString table, QString column);
     QString addFunction(QString table);
